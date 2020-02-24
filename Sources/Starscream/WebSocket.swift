@@ -631,7 +631,9 @@ open class WebSocket : NSObject, StreamDelegate, WebSocketClient, WSStreamDelega
         var key = ""
         let seed = 16
         for _ in 0..<seed {
-            let uni = UnicodeScalar(UInt32(97 + arc4random_uniform(25)))
+            var bytes = [UInt32](repeating: 0, count: 1)
+            _ = SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes)
+            let uni = UnicodeScalar(UInt32(97 + bytes[0] % 26))
             key += "\(Character(uni!))"
         }
         let data = key.data(using: String.Encoding.utf8)
