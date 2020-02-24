@@ -1322,8 +1322,8 @@ open class WebSocket : NSObject, StreamDelegate, WebSocketClient, WSStreamDelega
 private extension String {
     func sha1Base64() -> String {
         let data = self.data(using: String.Encoding.utf8)!
-        var digest = [UInt8](repeating: 0, count:Int(CC_SHA1_DIGEST_LENGTH))
-        data.withUnsafeBytes { _ = CC_SHA1($0, CC_LONG(data.count), &digest) }
+        var digest = [UInt8](repeating: 0, count:Int(CC_SHA256_DIGEST_LENGTH))
+        data.withUnsafeBytes { _ = CC_SHA256($0, CC_LONG(data.count), &digest) }
         return Data(bytes: digest).base64EncodedString()
     }
 }
